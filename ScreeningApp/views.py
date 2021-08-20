@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from .models import *
 import json
@@ -26,12 +27,26 @@ def screening_result(email,name,screening_status):
 	msg.content_subtype = "html"
 	msg.send(fail_silently = True)
 	print("Mail sended successfully")  
-
+def seeans(request):
+	screening_uuid=request.session.get('i')
+	var=request.session.get('per')
+	screen_obj = Screenings.objects.get(screening_uuid = screening_uuid)
+	if screen_obj.status == 'Passed' or screen_obj.status=='Failed' :
+	 mentors = Community_Member.objects.filter(type = 'Mentor')[:6]
+	 screen = Screenings.objects.get(screening_uuid = screening_uuid)
+	 screening_id = screen.screening_id
+	 questions = Screenings_Questions.objects.filter(screening_id=screening_id)
+	 return render(request, 'ScreeningApp/showans.html', {'questions': questions,'mentors':mentors,'var':var})
 class Screening(View):
 	def get(self,request,screening_uuid):
+		print('j')
+		print(screening_uuid)
+		request.session['i']=screening_uuid
 		mentors = Community_Member.objects.filter(type = 'Mentor')[:6]
 		screen = Screenings.objects.get(screening_uuid = screening_uuid)
 		if screen.status == 'Passed' or screen.status == 'Failed':
+			request.session['per']=screen.screening_result
+			request.session['i']=screening_uuid
 			return render(request, 'ScreeningApp/screening_completed.html')
 		if screen.status == "Closed":
 			return render(request, 'ScreeningApp/screening_error.html')
@@ -51,6 +66,7 @@ class Screening(View):
 
 class Screening_Preview(View):
 	def get(self,request,screening_uuid):
+		request.session.clear()
 		mentors = Community_Member.objects.filter(type = 'Mentor')[:6]
 		screen = Screenings.objects.get(screening_uuid = screening_uuid)
 		if screen.status == 'Passed' or screen.status == 'Failed':
@@ -77,6 +93,7 @@ class Screening_Preview(View):
 				false_count = false_count + 1
 		total = true_count + false_count
 		percentage = int((true_count / total) * 100)
+		request.session['per']=percentage
 		screeningid = obj.screening_id.screening_id
 		if (percentage >= 70):
 			screening_obj = Screenings.objects.filter(screening_id = screeningid).update(status = 'Passed')
@@ -99,10 +116,13 @@ class Screening_Preview(View):
 
 class Result(View):
 	def get(self,request,screening_uuid):
+		request.session.clear()
+		request.session['i']=screening_uuid
 		screen_obj = Screenings.objects.get(screening_uuid = screening_uuid)
 		candidate_name =  screen_obj.candidate_id 
 
 		percentage = screen_obj.screening_result
+		request.session['per']=percentage
 		if screen_obj.status == 'Passed':
 			message = "{name} passed the screening with  {percentage} percentage".format(name = candidate_name, percentage = percentage)
 			to_list = ['team@hackforchange.co.in',]
