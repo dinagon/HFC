@@ -40,11 +40,18 @@
                   {% endif%}
               </div>
 
-              {% if question.correct_ans == "option_1" %}
-<div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_1" checked  
-              <label for="option_1">{{i.option_1}}</label><br></div>
+{% if question.correct_ans == "option_1" %}
+{% if question.candidate_ans == "option_1" %}
+             
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_1" checked  
+                 <label for="option_1">{{i.option_1}}</label><br></div>
+              {% else %}
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_1" 
+                 <label for="option_1">{{i.option_1}}</label><br></div>
+              {% endif %}
+
 {% elif question.candidate_ans == "option_1" %}
-	<div class=r> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_1" checked  
+	          <div class=r> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_1" checked  
               <label for="option_1">{{i.option_1}}</label><br></div>
 {% else %}
 
@@ -53,8 +60,14 @@
 {% endif %}
 
               {% if question.correct_ans == "option_2" %}
-	<div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_2"   checked  
-              <label  for="option_2">{{i.option_2}} </label><br></div>
+{% if question.candidate_ans == "option_2" %}
+             
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_2" checked  
+                 <label for="option_2">{{i.option_2}}</label><br></div>
+              {% else %}
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_2" 
+                 <label for="option_2">{{i.option_2}}</label><br></div>
+              {% endif %}
 {% elif question.candidate_ans == "option_2" %}
 <div class=r> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_2"   checked  
               <label for="option_2">{{i.option_2}}</label><br></div>
@@ -64,8 +77,14 @@
 {% endif %}
 
               {% if question.correct_ans == "option_3" %}
-	<div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_3"   checked  
-              <label for="option_3">{{i.option_3}} </label><br></div>
+	{% if question.candidate_ans == "option_3" %}
+             
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_3" checked  
+                 <label for="option_3">{{i.option_3}}</label><br></div>
+              {% else %}
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_3" 
+                 <label for="option_3">{{i.option_3}}</label><br></div>
+              {% endif %}
 {% elif question.candidate_ans == "option_3" %}
 	<div class=r> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_3"   checked  
               <label for="option_3">{{i.option_3}}</label><br></div>
@@ -75,8 +94,14 @@
 {% endif %}
 
               {% if question.correct_ans == "option_4" %}
-	<div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_4"   checked  
-              <label for="option_4">{{i.option_4}}</label><br></div>
+{% if question.candidate_ans == "option_4" %}
+             
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_4" checked  
+                 <label for="option_4">{{i.option_4}}</label><br></div>
+              {% else %}
+                 <div class=g> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_4" 
+                 <label for="option_4">{{i.option_4}}</label><br></div>
+              {% endif %}
 {% elif question.candidate_ans == "option_4" %}
 	<div class=r> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_4"   checked  
               <label for="option_4">{{i.option_4}}</label><br></div>
@@ -86,14 +111,7 @@
 {% endif %}
             
 
-              {% comment %} <div class=o1> <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_1"   
-              <label for="option_1">{{i.option_1}}</label><br></div>
-              <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_2"   {% if question.correct_ans == "option_2"  %}  {% if question.correct_ans == "option_2" %}  {% else%}    {% endif %}  {% endif %}
-              <label for="option_2">{{i.option_2}}</label><br>
-              <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_3"  {% if question.correct_ans == "option_3"  %}  {% if question.correct_ans == "option_3" %} {% else%}    {% endif %}  {% endif %}
-              <label for="option_3">{{i.option_3}}</label><br>
-              <input type="radio" id={{question.id}} name={{question.id}} disabled='disabled' value="option_4"   {% if question.correct_ans == "option_4"  %}  {% if question.correct_ans == "option_4" %}  {% else%}    {% endif %}  {% endif %}
-              <label for="option_4">{{i.option_4}}</label><br> {% endcomment %}
+             
               
               <input type='hidden' name={{question.id}} value=" " />
               
